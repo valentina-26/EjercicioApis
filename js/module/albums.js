@@ -18,7 +18,7 @@ export const AddAlbum = async(arg)=>{
     if (val) return val;
     let config= {
         method:"POST",
-        headers:{"Content-type":"aplication/json"},
+        headers:{"Content-type":"application/json"},
         body: JSON.stringify(arg)
     }
 
