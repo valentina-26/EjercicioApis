@@ -26,7 +26,7 @@ export const AddPost = async (arg) => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(arg)
     }
-    let res = await fetch("https://jsonplaceholder.typicode.com/posts", config);
+    let res = await fetch("http://172.16.101.146:5800/posts", config);
     let data = await res.json();
     return data;
 }
@@ -40,14 +40,14 @@ export const updatePost = async (postId, arg) => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(arg)
     }
-    let res = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, config);
+    let res = await fetch(`http://172.16.101.146:5800/posts/${postId}`, config);
     let data = await res.json();
     return data;
 }
 
 //VALIDACIONES
 const validateAddPost = async ({ userId, title, body }) => {
-    if (typeof userId !== "number" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
+    if (typeof userId !== "string" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
     if (typeof body !== "string" || body === undefined) return { status: 406, message: "The body data is not arriving" };
     let user = await getUser({ userId });
@@ -55,19 +55,32 @@ const validateAddPost = async ({ userId, title, body }) => {
 }
 
 const validateUPDATEPost = async ({ userId, title, body }) => {
-    if (typeof userId !== "number" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
+    if (typeof userId !== "string" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
     if (typeof body !== "string" || body === undefined) return { status: 406, message: "The body data is not arriving" };
     let user = await getUser({ userId });
     if (user.status == 204) return { status: 200, message: "The user to search does not exist" };
 }
+const validateDeletPost = async ({id}) => {
+    if (typeof id !== "string"|| id === undefined) return { status: 406, message: "The post id does not arriving "}
+}
 
 
-
-
-
-
-
+//DELETE
+export const deletePost = async (arg) => {
+    let val = await validateDeletPost(arg);
+    if (val) return val;
+    let config = {
+        method:"DELETE",
+        headers:{"Content-type":"application/json"},
+    }
+    let res = await fetch(`https://jsonplaceholder.typicode.com/posts/${arg.id}`, config);
+    if (res.status === 404) return { status: 204, message: `the post you want to delete is not register in database` };
+    let data = await res.json();
+    data.status = 200 
+    data.message=" The post was deldete from database"
+    return data;
+}
 
 
 

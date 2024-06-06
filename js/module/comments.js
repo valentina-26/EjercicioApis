@@ -2,7 +2,7 @@ import { getAllPostone } from "./post.js";
 
 //GET
 export const GetAllComments = async () => {
-    let res = await fetch("https://jsonplaceholder.typicode.com/comments");
+    let res = await fetch("http://172.16.101.146:5801/comments");
     let data = await res.json();
     return data;
 }
@@ -17,7 +17,7 @@ export const AddComments = async(arg) => {
         body: JSON.stringify(arg)
     }
 
-    let res = await fetch("https://jsonplaceholder.typicode.com/comments", config);
+    let res = await fetch("http://172.16.101.146:5801/comments", config);
     let data = await res.json();
     return data;
 }
@@ -32,7 +32,7 @@ export const updateComment = async(commentId, arg) => {
         body: JSON.stringify(arg)
     }
 
-    let res = await fetch(`https://jsonplaceholder.typicode.com/comments/${commentId}`, config);
+    let res = await fetch(`http://172.16.101.146:5801/comments/${commentId}`, config);
     let data = await res.json();
     return data;
 }
@@ -53,6 +53,27 @@ const validateUPDATEComments = async ({postId, name, email, body}) => {
     let id = await getAllPostone({ postId });
     if (id.status == 204) return { status: 200, message: "The postId to search does not exist" };
 }
+
+const validateDeleteComments = async ({id}) => {
+    if (typeof id !== "string"|| id === undefined) return { status: 406, message: "The comment id does not arriving "}
+}
+
+//DELETE
+export const deleteComments = async (arg) => {
+    let val = await validateDeleteComments(arg);
+    if (val) return val;
+    let config = {
+        method:"DELETE",
+        headers:{"Content-type":"application/json"},
+    }
+    let res = await fetch(`http://172.16.101.146:5801/comments/${arg.id}`, config);
+    if (res.status === 404) return { status: 204, message: `the comment you want to delete is not register in database` };
+    let data = await res.json();
+    data.status = 200 
+    data.message=" The comment was deldete from database"
+    return data;
+}
+
 
 
 
