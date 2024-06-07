@@ -72,37 +72,47 @@ export const deletePhotos= async (arg) => {
 
 //UPDATE
 export const UPDATEPhoto = async () => {
-
-
     const photosId = prompt("Ingrese el ID del photo que desea modificar.");
-    const option = parseInt(prompt("Opciones disponibles:\n1.albumId  \n2. title  \n3.url  \n4.thumbnailUrl  \nIngrese la opción:"));
-    const Opciones = (option === 1) ? "albumId" : (option === 2) ? "title" : (option === 3) ? "url": (option === 4) ? "thumbnailUrl" :null;
-    
 
+   
+        const existe = await fetch(`http://172.16.101.146:5803/photos/${photosId}`);
+        const llamar = await existe.json();
 
-    if (!Opciones) {
-        console.log("Opción no válida.");
-        return "Opción no válida.";
+        if (llamar) {
+            const option = parseInt(prompt("Opciones disponibles:\n1. albumId\n2. title\n3. url\n4. thumbnailUrl\nIngrese la opción:"));
+            const Opciones = (option === 1) ? "albumId" :
+                             (option === 2) ? "title" :
+                             (option === 3) ? "url" :
+                             (option === 4) ? "thumbnailUrl" : null;
+
+            if (!Opciones) {
+                console.log("Opción no válida.");
+                return "Opción no válida.";
+            }
+
+            const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+            llamar[Opciones] = newValue;
+
+            const updatephoto = { ...llamar, id: photosId, [Opciones]: newValue };
+
+            const config = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatephoto)
+            };
+
+            const response = await fetch(`http://172.16.101.146:5803/photos/${photosId}`, config);
+            const data = await response.json();
+
+            console.log("Álbum actualizado con éxito:", data);
+            return data;
+        } else {
+            console.log("El id no existe o es nulo.");
+            return "El id no existe o es nulo.";
+        }
+  
     }
-
-    const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-    const updatedAlbum = { id: photosId, [Opciones]: newValue };
-
-
-        const config = {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(updatedAlbum)
-        };
-
-        const response = await fetch(`http://172.16.101.146:5803/photos/${photosId}`, config);
-        const data = await response.json();
-
-        console.log("Álbum actualizado con éxito:", data);
-        
-        return data;
-    }
-
+;
 
 
 

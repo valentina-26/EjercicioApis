@@ -84,6 +84,7 @@ export const updateAlbum = async () => {
     const updatedAlbum = { id: albumId, [Opciones]: newValue };
 
 
+
         const config = {
             method: "PUT",
             headers: {"Content-Type": "application/json"},

@@ -55,36 +55,46 @@ export const deleteComments = async (arg) => {
     return data;
 }
 
-
+//UPDATE
 export const updateComment = async () => {
 
 
     const commentID = prompt("Ingrese el ID del comment que desea modificar.");
-    const option = parseInt(prompt("Opciones disponibles: \n1. postId   \n2. name  \n3. email  \n4. body  \nIngrese la opción:"));
-    const Opciones = (option === 1) ? "postId" : (option === 2) ? "name":(option === 3) ? "email" : (option === 4) ? "body" : null;
-    
 
+    const existe = await fetch(`http://172.16.101.146:5801/comments/${commentID}`);
+    const llamar = await existe.json();
 
-    if (!Opciones) {
-        console.log("Opción no válida.");
-        return "Opción no válida.";
-    }
-
-    const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-    const updatedAlbum = { id: commentID, [Opciones]: newValue };
-
-
-        const config = {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(updatedAlbum)
-        };
-
-        const response = await fetch(`http://172.16.101.146:5801/comments/${commentID}`, config);
-        const data = await response.json();
-        console.log("Comment actualizado con éxito:", data);
+    if(llamar){
+        const option = parseInt(prompt("Opciones disponibles: \n1. postId   \n2. name  \n3. email  \n4. body  \nIngrese la opción:"));
+        const Opciones = (option === 1) ? "postId" : (option === 2) ? "name":(option === 3) ? "email" : (option === 4) ? "body" : null;
         
-        return data;
+
+
+        if (!Opciones) {
+            console.log("Opción no válida.");
+            return "Opción no válida.";
+        }
+
+        const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+        const updatedAlbum = { ...llamar, id: commentID, [Opciones]: newValue };
+
+
+            const config = {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(updatedAlbum)
+            };
+
+            const response = await fetch(`http://172.16.101.146:5801/comments/${commentID}`, config);
+            const data = await response.json();
+
+            console.log("Comment actualizado con éxito:", data);
+            
+            return data;
+        } else {
+            console.log("El id no existe o es nulo.");
+            return "El id  no existe o es nulo.";
+        }
     }
 
 
