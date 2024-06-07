@@ -80,10 +80,7 @@ async function menuPosts() {
         return await deletePost({ id });
     }
     if (menu == 4) {
-        let userId = prompt("Enter the user ID", 10);
-        let title = prompt("Enter the post title");
-        let body = prompt("Enter the body of the post");
-        return await updatePost({ userId, title, body });
+        return await updatePost();
     }
 }
 
@@ -207,40 +204,7 @@ async function menuUsers() {
         return await deleteUser({ id });
     }
     if (menu == 4) {
-        let name = prompt("Enter the user name", "John Doe");
-        let username = prompt("Enter the username", "johndoe");
-        let email = prompt("Enter the email", "john@example.com");
-        let street = prompt("Enter the street", "Victor Plains");
-        let suite = prompt("Enter the suite", "Suite 879");
-        let city = prompt("Enter the city", "Wisokyburgh");
-        let zipcode = prompt("Enter the zipcode", "90566-7771");
-        let lat = prompt("Enter the latitude", "-43.9509");
-        let lng = prompt("Enter the longitude", "-34.4618");
-        let phone = prompt("Enter the phone number", "1234567890");
-        let website = prompt("Enter the website", "httpexample.com");
-        let companyName = prompt("Enter the company name", "Example Inc.");
-        let catchPhrase = prompt("Enter the company catch phrase", "Proactive didactic contingency");
-        let bs = prompt("Enter the company bs", "synergize scalable supply-chains");
-        
-
-        let address = {
-            street,
-            suite,
-            city,
-            zipcode,
-            geo: {
-                lat,
-                lng
-            }
-        };
-    
-
-        let company = {
-            name: companyName,
-            catchPhrase,
-            bs
-        };
-        return await updateUser({ name, username, email, address, phone, website, company });
+        return await updateUser();
     }
 }
 
