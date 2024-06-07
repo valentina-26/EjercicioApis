@@ -35,7 +35,7 @@ export const AddPhotos = async(arg) => {
 }
 
 //UPDATE (PUT)
-export const UPDATEPhoto = async(photoId, arg) => {
+export const UPDATEPhoto = async(id, arg) => {
     let val = await validateUPDATEPhotos(arg);
     if (val) return val;
     let config = {
@@ -43,14 +43,14 @@ export const UPDATEPhoto = async(photoId, arg) => {
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(arg)
     };
-    let res = await fetch(`http://172.16.101.146:5803/photos/${photoId}`, config);
+    let res = await fetch(`http://172.16.101.146:5803/photos/${id}`, config);
     let data = await res.json();
     return data;
 }
 
 //VALIDACIONES
 const validateAddPhotos = async ({ albumId, title, url, thumbnailUrl }) => {
-    if (typeof albumId !== "number" || albumId === undefined) return { status: 406, message: "The album data is not arriving" };
+    if (typeof albumId !== "string" || albumId === undefined) return { status: 406, message: "The albumId data is not arriving" };
     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
     if (typeof url !== "string" || url === undefined) return { status: 406, message: "The URL data is not arriving" };
     if (typeof thumbnailUrl !== "string" || thumbnailUrl === undefined) return { status: 406, message: "The thumbnail URL data is not arriving" };
@@ -59,7 +59,7 @@ const validateAddPhotos = async ({ albumId, title, url, thumbnailUrl }) => {
 }
 
 const validateUPDATEPhotos = async ({ albumId, title, url, thumbnailUrl }) => {
-    if (typeof albumId !== "number" || albumId === undefined) return { status: 406, message: "The album data is not arriving" };
+    if (typeof albumId !== "number" || albumId === undefined) return { status: 406, message: "The albumId data is not arriving" };
     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
     if (typeof url !== "string" || url === undefined) return { status: 406, message: "The URL data is not arriving" };
     if (typeof thumbnailUrl !== "string" || thumbnailUrl === undefined) return { status: 406, message: "The thumbnail URL data is not arriving" };
@@ -73,7 +73,7 @@ const validateDeletePothos = async ({id}) => {
 
 
 //DELETE
-export const deleteAlbum = async (arg) => {
+export const deletePhotos= async (arg) => {
     let val = await validateDeletePothos(arg);
     if (val) return val;
     let config = {

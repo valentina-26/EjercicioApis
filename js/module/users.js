@@ -48,24 +48,44 @@ export const validateGetUser = async ({ userId }) => {
     if (typeof userId !== "string" || userId === undefined) return { status: 406, message: `The data ${userId} is not arriving or does not comply with the required format` };
 };
 
-const validateAddUser = async ({ name, username, email, address, phone, website, company }) => {
-    if (typeof name !== "string" || name === undefined) return { status: 406, message: `The data name is not arriving or does not comply with the required format` };
-    if (typeof username !== "string" || username === undefined) return { status: 406, message: `The data username is not arriving or does not comply with the required format` };
-    if (typeof email !== "string" || email === undefined) return { status: 406, message: `The data email is not arriving or does not comply with the required format` };
-    if (typeof address !== "object" || address === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` };
-    if (typeof phone !== "string" || phone === undefined) return { status: 406, message: `The data phone is not arriving or does not comply with the required format` };
-    if (typeof website !== "string" || website === undefined) return { status: 406, message: `The data website is not arriving or does not comply with the required format` };
-    if (typeof company !== "object" || company === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` };
+const validateAddUser = async ({ name, username, email, address, phone, website, company}) => {
+    if (typeof name !== "string" || name === undefined) return { status: 406, message: `The data name is not arriving or does not comply with the required format` }
+    if (typeof username !== "string" || username === undefined) return { status: 406, message: `The data username is not arriving or does not comply with the required format` }
+    if (typeof email !== "string" || email === undefined) return { status: 406, message: `The data email is not arriving or does not comply with the required format` }
+    if (typeof address !== "object" || address === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.street !== "string" || address.street === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.suite !== "string" || address.suite === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.city !== "string" || address.city === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.zipcode !== "string" || address.zipcode === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo!== "object" || address.geo === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo.lat!== "string" || address.geo.lat === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo.lng!== "string" || address.geo.lng === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof phone !== "string" || phone === undefined) return { status: 406, message: `The data phone is not arriving or does not comply with the required format` }
+    if (typeof website !== "string" || website === undefined) return { status: 406, message: `The data website is not arriving or does not comply with the required format` }
+    if (typeof company !== "object" || company === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.name !== "string" || company.name === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.catchPhrase !== "string" || company.catchPhrase === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.bs!== "string" || company.bs === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
 };
 
 const validateUPDATEUser = async ({ name, username, email, address, phone, website, company }) => {
-    if (typeof name !== "string" || name === undefined) return { status: 406, message: `The data name is not arriving or does not comply with the required format` };
-    if (typeof username !== "string" || username === undefined) return { status: 406, message: `The data username is not arriving or does not comply with the required format` };
-    if (typeof email !== "string" || email === undefined) return { status: 406, message: `The data email is not arriving or does not comply with the required format` };
-    if (typeof address !== "object" || address === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` };
-    if (typeof phone !== "number" || phone === undefined) return { status: 406, message: `The data phone is not arriving or does not comply with the required format` };
-    if (typeof website !== "string" || website === undefined) return { status: 406, message: `The data website is not arriving or does not comply with the required format` };
-    if (typeof company !== "object" || company === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` };
+    if (typeof name !== "string" || name === undefined) return { status: 406, message: `The data name is not arriving or does not comply with the required format` }
+    if (typeof username !== "string" || username === undefined) return { status: 406, message: `The data username is not arriving or does not comply with the required format` }
+    if (typeof email !== "string" || email === undefined) return { status: 406, message: `The data email is not arriving or does not comply with the required format` }
+    if (typeof address !== "object" || address === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.street !== "string" || address.street === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.suite !== "string" || address.suite === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.city !== "string" || address.city === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.zipcode !== "string" || address.zipcode === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo!== "object" || address.geo === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo.lat!== "string" || address.geo.lat === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof address.geo.lng!== "string" || address.geo.lng === undefined) return { status: 406, message: `The data address is not arriving or does not comply with the required format` }
+    if (typeof phone !== "string" || phone === undefined) return { status: 406, message: `The data phone is not arriving or does not comply with the required format` }
+    if (typeof website !== "string" || website === undefined) return { status: 406, message: `The data website is not arriving or does not comply with the required format` }
+    if (typeof company !== "object" || company === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.name !== "string" || company.name === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.catchPhrase !== "string" || company.catchPhrase === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
+    if (typeof company.bs!== "string" || company.bs === undefined) return { status: 406, message: `The data company is not arriving or does not comply with the required format` }
 };
 
 const validateDeleteUser = async ({id}) => {
@@ -74,7 +94,7 @@ const validateDeleteUser = async ({id}) => {
 
 
 //DELETE
-export const deleteuser = async (arg) => {
+export const deleteUser = async (arg) => {
     let val = await validateDeleteUser(arg);
     if (val) return val;
     let config = {
