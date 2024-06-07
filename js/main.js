@@ -145,11 +145,7 @@ async function menuPhotos() {
         return await deletePhotos({ id });
     }
     if (menu == 4) {
-        let albumId = prompt("Enter the album ID", 15);
-        let title = prompt("Enter the new photo title", "Gallery");
-        let url = prompt("Enter the new photo URL", "http://example.com/photo.jpg");
-        let thumbnailUrl = prompt("Enter the new photo thumbnail URL", "http://example.com/thumbnail.jpg");
-        return await UPDATEPhoto({ albumId, title, url, thumbnailUrl });
+        return await UPDATEPhoto();
     }
 }
 
