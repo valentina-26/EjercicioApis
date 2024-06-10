@@ -79,7 +79,12 @@ export const deleteUser = async (arg) => {
     return data;
 }
 
-//UPDATE
+
+
+
+
+
+//Upadte
 export const updateUser = async () => {
     const userId = prompt("Ingrese el ID del usuario que desea modificar.");
 
@@ -91,65 +96,199 @@ export const updateUser = async () => {
         let data = await res.json();
         return data;
     };
-    const llamar = await existe.json();
+    const llamar = await existe();
 
     let Opciones;
     let updateUsers;
     let updateAdress;
     let updateGeo;
-    let updateCompany
+    let updateCompany;
 
     if (llamar) {
         const option = parseInt(prompt("Opciones disponibles:\n1. name  \n2. username  \n3. email  \n4. address  \n5.  phone  \n6. website  \n7. company \nIngrese la opción:"));
         Opciones = (option === 1) ? "name" :
-                            (option === 2) ? "username" :
-                             (option === 3) ? "email" :
-                             (option === 4) ? "address" :
-                             (option === 5) ? "phone" :
-                             (option === 6) ? "website" :
-                             (option === 7) ? "company" : null;
-    
+                   (option === 2) ? "username" :
+                   (option === 3) ? "email" :
+                   (option === 4) ? "address" :
+                   (option === 5) ? "phone" :
+                   (option === 6) ? "website" :
+                   (option === 7) ? "company" : null;
     }
 
-    if (!Opciones){
+    if (!Opciones) {
         console.log("Opción no válida.");
         return "Opción no válida.";
     }
 
-    if (Opciones = 1 || 2 || 3 || 5 || 6) {
+    if (Opciones === "name" || Opciones === "username" || Opciones === "email" || Opciones === "phone" || Opciones === "website") {
         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
         updateUsers = { ...llamar, [Opciones]: newValue };
     }
 
-    if (Opciones == 4){
-        const optionAdress = parseInt(prompt("Opciones disponibles:\n1. street  \n2. suite  \n3. city  \n4. zipcode  \n5. geo  \nIngrese la opción:"));
-        const newValue = prompt(`Ingrese el nuevo valor para ${optionAdress}:`);
-        updateAdress = {... llamar, [optionAdress]: newValue };
-        if(optionAdress == 5){
+    if (Opciones === "address") {
+        const optionAddress = parseInt(prompt("Opciones disponibles:\n1. street  \n2. suite  \n3. city  \n4. zipcode  \n5. geo  \nIngrese la opción:"));
+        const addressField = (optionAddress === 1) ? "street" :
+                             (optionAddress === 2) ? "suite" :
+                             (optionAddress === 3) ? "city" :
+                             (optionAddress === 4) ? "zipcode" :
+                             (optionAddress === 5) ? "geo" : null;
+
+        if (!addressField) {
+            console.log("Opción de dirección no válida.");
+            return "Opción de dirección no válida.";
+        }
+
+        if (addressField !== "geo") {
+            const newValue = prompt(`Ingrese el nuevo valor para ${addressField}:`);
+            updateAdress = { ...llamar, address: { ...llamar.address, [addressField]: newValue } };
+        } else {
             const optionGeo = parseInt(prompt("Opciones disponibles:\n1. lat  \n2. lng \nIngrese la opción:"));
-            const newValue = prompt(`Ingrese el nuevo valor para ${optionGeo}:`);
-            updateGeo = {... llamar, [optionGeo]: newValue };
+            const geoField = (optionGeo === 1) ? "lat" :
+                             (optionGeo === 2) ? "lng" : null;
+
+            if (!geoField) {
+                console.log("Opción de geolocalización no válida.");
+                return "Opción de geolocalización no válida.";
+            }
+
+            const newValue = prompt(`Ingrese el nuevo valor para ${geoField}:`);
+            updateGeo = { ...llamar, address: { ...llamar.address, geo: { ...llamar.address.geo, [geoField]: newValue } } };
         }
     }
 
-    if (Opciones == 7){
+    if (Opciones === "company") {
         const optionCompany = parseInt(prompt("Opciones disponibles:\n1. name  \n2. catchPhrase  \n3. bs   \nIngrese la opción:"));
-        const newValue = prompt(`Ingrese el nuevo valor para ${optionCompany}:`);
-        updateCompany= {... llamar, [optionCompany]: newValue };
+        const companyField = (optionCompany === 1) ? "name" :
+                             (optionCompany === 2) ? "catchPhrase" :
+                             (optionCompany === 3) ? "bs" : null;
+
+        if (!companyField) {
+            console.log("Opción de compañía no válida.");
+            return "Opción de compañía no válida.";
+        }
+
+        const newValue = prompt(`Ingrese el nuevo valor para ${companyField}:`);
+        updateCompany = { ...llamar, company: { ...llamar.company, [companyField]: newValue } };
     }
 
-    console.log(updateUsers)
+    console.log(updateUsers);
 
     // const config = {
-    //     method: "PUT",
+    //     method: "PATCH",
     //     headers: { "Content-Type": "application/json" },
     //     body: JSON.stringify(updateUsers)
     // };
 
-    // const response = await fetch(`http://172.16.101.146:5803/photos/${userId}`, config);
+    // const response = await fetch(`http://172.16.101.146:5804/users/${userId}`, config);
     // const data = await response.json();
 
-    }
+};
+
+
+
+//PATCH
+// export const updateUser = async () => {
+//     const userId = prompt("Ingrese el ID del usuario que desea modificar.");
+
+//     const existe = async () => {
+//         let val = await validateGetUser();
+//         if (val) return val;
+//         let res = await fetch(`http://172.16.101.146:5804/users/${userId}`);
+//         if (res.status === 404) return { status: 204, message: `Username does not exist` };
+//         let data = await res.json();
+//         return data;
+//     };
+//     const llamar = await existe();
+
+//     let Opciones;
+//     let updateFields = {};
+
+//     if (llamar) {
+//         const option = parseInt(prompt("Opciones disponibles:\n1. name  \n2. username  \n3. email  \n4. address  \n5. phone  \n6. website  \n7. company \nIngrese la opción:"));
+//         Opciones = (option === 1) ? "name" :
+//                             (option === 2) ? "username" :
+//                             (option === 3) ? "email" :
+//                             (option === 4) ? "address" :
+//                             (option === 5) ? "phone" :
+//                             (option === 6) ? "website" :
+//                             (option === 7) ? "company" : null;
+//     }
+
+//     if (!Opciones){
+//         console.log("Opción no válida.");
+//         return "Opción no válida.";
+//     }
+
+//     if (Opciones === "name" || Opciones === "username" || Opciones === "email" || Opciones === "phone" || Opciones === "website") {
+//         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+//         updateFields[Opciones] = newValue;
+//     }
+
+//     if (Opciones === "address") {
+//         const optionAddress = parseInt(prompt("Opciones disponibles:\n1. street  \n2. suite  \n3. city  \n4. zipcode  \n5. geo  \nIngrese la opción:"));
+//         const addressField = (optionAddress === 1) ? "street" :
+//                              (optionAddress === 2) ? "suite" :
+//                              (optionAddress === 3) ? "city" :
+//                              (optionAddress === 4) ? "zipcode" :
+//                              (optionAddress === 5) ? "geo" : null;
+
+//         if (!addressField) {
+//             console.log("Opción de dirección no válida.");
+//             return "Opción de dirección no válida.";
+//         }
+
+//         if (addressField !== "geo") {
+//             const newValue = prompt(`Ingrese el nuevo valor para ${addressField}:`);
+//             updateFields["address"] = { ...llamar.address, [addressField]: newValue };
+//         } else {
+//             const optionGeo = parseInt(prompt("Opciones disponibles:\n1. lat  \n2. lng \nIngrese la opción:"));
+//             const geoField = (optionGeo === 1) ? "lat" :
+//                              (optionGeo === 2) ? "lng" : null;
+
+//             if (!geoField) {
+//                 console.log("Opción de geolocalización no válida.");
+//                 return "Opción de geolocalización no válida.";
+//             }
+
+//             const newValue = prompt(`Ingrese el nuevo valor para ${geoField}:`);
+//             updateFields["address"] = {
+//                 ...llamar.address,
+//                 geo: { ...llamar.address.geo, [geoField]: newValue }
+//             };
+//         }
+//     }
+
+//     if (Opciones === "company") {
+//         const optionCompany = parseInt(prompt("Opciones disponibles:\n1. name  \n2. catchPhrase  \n3. bs   \nIngrese la opción:"));
+//         const companyField = (optionCompany === 1) ? "name" :
+//                              (optionCompany === 2) ? "catchPhrase" :
+//                              (optionCompany === 3) ? "bs" : null;
+
+//         if (!companyField) {
+//             console.log("Opción de compañía no válida.");
+//             return "Opción de compañía no válida.";
+//         }
+
+//         const newValue = prompt(`Ingrese el nuevo valor para ${companyField}:`);
+//         updateFields["company"] = { ...llamar.company, [companyField]: newValue };
+//     }
+
+//     const config = {
+//         method: "PATCH",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(updateFields)
+//     };
+
+//     const response = await fetch(`http://172.16.101.146:5804/users/${userId}`, config);
+//     const data = await response.json();
+
+//     console.log("Actualización completada:", data);
+// };
+
+
+
+
+  
 
 
 

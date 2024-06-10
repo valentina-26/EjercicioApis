@@ -112,7 +112,47 @@ export const UPDATEPhoto = async () => {
         }
   
     }
-;
+
+    
+//PATCH
+// export const UPDATEPhoto = async () => {
+//     const photosId = prompt("Ingrese el ID de la foto que desea modificar.");
+
+//     const existe = await fetch(`http://172.16.101.146:5803/photos/${photosId}`);
+//     const llamar = await existe.json();
+
+//     if (llamar) {
+//         const option = parseInt(prompt("Opciones disponibles:\n1. albumId\n2. title\n3. url\n4. thumbnailUrl\nIngrese la opción:"));
+//         const Opciones = (option === 1) ? "albumId" :
+//                          (option === 2) ? "title" :
+//                          (option === 3) ? "url" :
+//                          (option === 4) ? "thumbnailUrl" : null;
+
+//         if (!Opciones) {
+//             console.log("Opción no válida.");
+//             return "Opción no válida.";
+//         }
+
+//         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+//         const updatephoto = { [Opciones]: newValue };
+
+//         const config = {
+//             method: "PATCH",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(updatephoto)
+//         };
+
+//         const response = await fetch(`http://172.16.101.146:5803/photos/${photosId}`, config);
+//         const data = await response.json();
+
+//         console.log("Foto actualizada con éxito:", data);
+//         return data;
+//     } else {
+//         console.log("El ID no existe o es nulo.");
+//         return "El ID no existe o es nulo.";
+//     }
+// }
+
 
 
 

@@ -97,6 +97,43 @@ export const updateComment = async () => {
         }
     }
 
+    
+// //PATCH
+// export const updateComment = async () => {
+//     const commentID = prompt("Ingrese el ID del comentario que desea modificar.");
+
+//     const existe = await fetch(`http://172.16.101.146:5801/comments/${commentID}`);
+//     const llamar = await existe.json();
+
+//     if (llamar) {
+//         const option = parseInt(prompt("Opciones disponibles: \n1. postId   \n2. name  \n3. email  \n4. body  \nIngrese la opción:"));
+//         const Opciones = (option === 1) ? "postId" : (option === 2) ? "name" : (option === 3) ? "email" : (option === 4) ? "body" : null;
+
+//         if (!Opciones) {
+//             console.log("Opción no válida.");
+//             return "Opción no válida.";
+//         }
+
+//         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+//         const updatedComment = { [Opciones]: newValue };
+
+//         const config = {
+//             method: "PATCH",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify(updatedComment)
+//         };
+
+//         const response = await fetch(`http://172.16.101.146:5801/comments/${commentID}`, config);
+//         const data = await response.json();
+
+//         console.log("Comentario actualizado con éxito:", data);
+        
+//         return data;
+//     } else {
+//         console.log("El ID no existe o es nulo.");
+//         return "El ID no existe o es nulo.";
+//     }
+// }
 
 
 
