@@ -60,144 +60,82 @@ export const deleteAlbum = async (arg) => {
 
 
 //UPDATE
-export const updateAlbum = async () => {
+// export const updateAlbum = async () => {
 
 
-    const albumId = prompt("Ingrese el ID del álbum que desea modificar.");
+//     const albumId = prompt("Ingrese el ID del álbum que desea modificar.");
 
-    const existe = await fetch(`http://172.16.101.146:5802/albums/${albumId}`);
-        const llamar = await existe.json();
+//     const existe = await fetch(`http://172.16.101.146:5802/albums/${albumId}`);
+//         const llamar = await existe.json();
 
-        if (llamar) {    
+//         if (llamar) {    
 
-            const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\nIngrese la opción:"));
-            const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : null;
+//             const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\nIngrese la opción:"));
+//             const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : null;
             
 
 
+//             if (!Opciones) {
+//                 console.log("Opción no válida.");
+//                 return "Opción no válida.";
+//             }
+
+//             const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+//             const updatedAlbum = { id: albumId, [Opciones]: newValue };
+
+
+
+//                 const config = {
+//                     method: "PUT",
+//                     headers: {"Content-Type": "application/json"},
+//                     body: JSON.stringify(updatedAlbum)
+//                 };
+
+//                 const response = await fetch(`http://172.16.101.146:5802/albums/${albumId}`, config);
+//                 const data = await response.json();
+
+//                 console.log("Álbum actualizado con éxito:", data);
+                
+//                 return data;
+//             }else {
+//                     console.log("El id no existe o es nulo.");
+//                     return "El id no existe o es nulo.";}
+//     }
+
+
+    //PATCH 
+    export const updateAlbum = async () => {
+        const albumId = prompt("Ingrese el ID del álbum que desea modificar.");
+    
+        const existe = await fetch(`http://172.16.101.146:5802/albums/${albumId}`);
+        const llamar = await existe.json();
+    
+        if (llamar) {
+            const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\nIngrese la opción:"));
+            const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : null;
+    
             if (!Opciones) {
                 console.log("Opción no válida.");
                 return "Opción no válida.";
             }
-
+    
             const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-            const updatedAlbum = { id: albumId, [Opciones]: newValue };
-
-
-
-                const config = {
-                    method: "PUT",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(updatedAlbum)
-                };
-
-                const response = await fetch(`http://172.16.101.146:5802/albums/${albumId}`, config);
-                const data = await response.json();
-
-                console.log("Álbum actualizado con éxito:", data);
-                
-                return data;
-            }else {
-                    console.log("El id no existe o es nulo.");
-                    return "El id no existe o es nulo.";}
-    }
-
-
-    //PATCH 
-    // export const updateAlbum = async () => {
-    //     const albumId = prompt("Ingrese el ID del álbum que desea modificar.");
+            const updatedAlbum = { [Opciones]: newValue };
     
-    //     const existe = await fetch(`http://172.16.101.146:5802/albums/${albumId}`);
-    //     const llamar = await existe.json();
+            const config = {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedAlbum)
+            };
     
-    //     if (llamar) {
-    //         const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\nIngrese la opción:"));
-    //         const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : null;
+            const response = await fetch(`http://172.16.101.146:5802/albums/${albumId}`, config);
+            const data = await response.json();
     
-    //         if (!Opciones) {
-    //             console.log("Opción no válida.");
-    //             return "Opción no válida.";
-    //         }
-    
-    //         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-    //         const updatedAlbum = { [Opciones]: newValue };
-    
-    //         const config = {
-    //             method: "PATCH",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify(updatedAlbum)
-    //         };
-    
-    //         const response = await fetch(`http://172.16.101.146:5802/albums/${albumId}`, config);
-    //         const data = await response.json();
-    
-    //         console.log("Álbum actualizado con éxito:", data);
+            console.log("Álbum actualizado con éxito:", data);
             
-    //         return data;
-    //     } else {
-    //         console.log("El ID no existe o es nulo.");
-    //         return "El ID no existe o es nulo.";
-    //     }
-    // }
-    
-    
-    
-
-
-
-
-// export const updateAlbum = async () => {
-//     let id = prompt("Ingrese el ID del álbum que desea modificar.");
-
-//     let opciones = "Opciones disponibles:\n1. userId\n2. title";
-//     let opcion = parseInt(prompt(`${opciones}\nIngrese la opción:`));
-
-//     let llaveAModificar;
-//     if (opcion === 1) {
-//         llaveAModificar = "userId";
-//     } else if (opcion === 2) {
-//         llaveAModificar = "title";
-//     } else {
-//         return "Opción no válida.";
-//     }
-
-//     let nuevoValor = prompt(`Ingrese el nuevo valor para ${llaveAModificar}:`);
-//     let albumActualizado = { id, [llaveAModificar]: nuevoValor };
-
-//     let confirmacion = confirm(`¿Está seguro que desea actualizar este álbum?\n${JSON.stringify(albumActualizado)}`);
-
-//     if (confirmacion) {
-//         let config = {
-//             method: "PUT",
-//             headers: {"Content-Type": "application/json"},
-//             body: JSON.stringify(albumActualizado)
-//         };
-//         let res = await fetch(`http://172.16.101.146:5802/albums/${id}`, config);
-//         let data = await res.json();
-//         return data;
-//     }
-// }
-
-
-// //UPDATE (PUT)
-// export const updateAlbum = async(id, arg)=>{
-//     let val = await validateUPDATEAlbum(arg);
-//     if (val) return val;
-//     let config= {
-//         method:"PUT",
-//         headers:{"Content-type":"application/json"},
-//         body: JSON.stringify(arg)
-//     }
-
-//     let res = await fetch(`http://172.16.101.146:5802/albums/${id}`, config);
-//     let data = await res.json();
-//     return data;
-// }
-
-// const validateUPDATEAlbum = async({id, userId, title})=> {
-//     if (typeof id !== "string" || id == undefined) return {status: 406, message: "The data id is not arriving"}
-//     if (typeof userId !== "string" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
-//     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
-//     let user = await getUser({ userId });
-//     if (user.status == 204) return { status: 200, message: "The album to search does not exist" };
-// }
+            return data;
+        } else {
+            console.log("El ID no existe o es nulo.");
+            return "El ID no existe o es nulo.";
+        }
+    }

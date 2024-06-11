@@ -4,7 +4,7 @@ import { getUser } from "./users.js";
 export const getAllPostone = async (arg) => {
     let val = await validateAddPost(arg);
     if (val) return val;
-    let res = await fetch(`https://jsonplaceholder.typicode.com/posts/${arg.postId}`);
+    let res = await fetch(`http://172.16.101.146:5800/posts/${arg.postId}`);
     if (res.status === 404) return { status: 204, message: 'Post does not exist' };
     let data = await res.json();
     return data;
@@ -12,7 +12,7 @@ export const getAllPostone = async (arg) => {
 
 //GET
 export const getAllPost = async () => {
-    let res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    let res = await fetch(`http://172.16.101.146:5800/posts`);
     let data = await res.json();
     return data;
 }
@@ -58,7 +58,7 @@ export const deletePost = async (arg) => {
         method:"DELETE",
         headers:{"Content-type":"application/json"},
     }
-    let res = await fetch(`https://jsonplaceholder.typicode.com/posts/${arg.id}`, config);
+    let res = await fetch(`http://172.16.101.146:5800/posts/${arg.id}`, config);
     if (res.status === 404) return { status: 404, message: `The post with ID ${arg.id} does not exist in the database` };
     let data = await res.json();
     data.status = 200;
@@ -68,105 +68,80 @@ export const deletePost = async (arg) => {
 
 
 //UPDATE
-export const updatePost = async () => {
+// export const updatePost = async () => {
 
 
-    const postId = prompt("Ingrese el ID del álbum que desea modificar.");
+//     const postId = prompt("Ingrese el ID del álbum que desea modificar.");
 
-    const existe = await fetch(`http://172.16.101.146:5802/albums/${postId}`);
-        const llamar = await existe.json();
+//     const existe = await fetch(`http://172.16.101.146:5800/posts/${postId}`);
+//         const llamar = await existe.json();
 
-        if(llamar){
-        const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title   \n2. body \nIngrese la opción:"));
-        const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" :(option===3) ? "body" : null;
+//         if(llamar){
+//         const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title   \n2. body \nIngrese la opción:"));
+//         const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" :(option===3) ? "body" : null;
         
 
 
-        if (!Opciones) {
-            console.log("Opción no válida.");
-            return "Opción no válida.";
-        }
+//         if (!Opciones) {
+//             console.log("Opción no válida.");
+//             return "Opción no válida.";
+//         }
 
-        const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-        const updatedAlbum = {...llamar, id: postId, [Opciones]: newValue };
+//         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+//         const updatedAlbum = {...llamar, id: postId, [Opciones]: newValue };
 
 
-            const config = {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(updatedAlbum)
-            };
+//             const config = {
+//                 method: "PUT",
+//                 headers: {"Content-Type": "application/json"},
+//                 body: JSON.stringify(updatedAlbum)
+//             };
 
-            const response = await fetch(`http://172.16.101.146:5802/albums/${postId}`, config);
-            const data = await response.json();
+//             const response = await fetch(`http://172.16.101.146:5800/posts/${postId}`, config);
+//             const data = await response.json();
 
-            console.log("post actualizado con éxito:", data);
+//             console.log("post actualizado con éxito:", data);
             
-            return data;
-        }else {
-            console.log("El id no existe o es nulo.");
-            return "El id no existe o es nulo.";
-        }
-    }
+//             return data;
+//         }else {
+//             console.log("El id no existe o es nulo.");
+//             return "El id no existe o es nulo.";
+//         }
+//     }
 
 
     //PATCH
-    // export const updatePost = async () => {
-    //     const postId = prompt("Ingrese el ID del post que desea modificar.");
+    export const updatePost = async () => {
+        const postId = prompt("Ingrese el ID del post que desea modificar.");
     
-    //     const existe = await fetch(`http://172.16.101.146:5802/albums/${postId}`);
-    //     const llamar = await existe.json();
+        const existe = await fetch(`http://172.16.101.146:5800/posts/${postId}`);
+        const llamar = await existe.json();
     
-    //     if (llamar) {
-    //         const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\n3. body\nIngrese la opción:"));
-    //         const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : (option === 3) ? "body" : null;
+        if (llamar) {
+            const option = parseInt(prompt("Opciones disponibles:\n1. userId\n2. title\n3. body\nIngrese la opción:"));
+            const Opciones = (option === 1) ? "userId" : (option === 2) ? "title" : (option === 3) ? "body" : null;
     
-    //         if (!Opciones) {
-    //             console.log("Opción no válida.");
-    //             return "Opción no válida.";
-    //         }
+            if (!Opciones) {
+                console.log("Opción no válida.");
+                return "Opción no válida.";
+            }
     
-    //         const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
-    //         const updatedPost = { [Opciones]: newValue };
+            const newValue = prompt(`Ingrese el nuevo valor para ${Opciones}:`);
+            const updatedPost = { [Opciones]: newValue };
     
-    //         const config = {
-    //             method: "PATCH",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify(updatedPost)
-    //         };
+            const config = {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedPost)
+            };
     
-    //         const response = await fetch(`http://172.16.101.146:5802/albums/${postId}`, config);
-    //         const data = await response.json();
+            const response = await fetch(`http://172.16.101.146:5800/posts/${postId}`, config);
+            const data = await response.json();
     
-    //         console.log("Post actualizado con éxito:", data);
-    //         return data;
-    //     } else {
-    //         console.log("El ID no existe o es nulo.");
-    //         return "El ID no existe o es nulo.";
-    //     }
-    // }
-    
-
-// //UPDATE (PUT)
-// export const updatePost = async (id, arg) => {
-//     let val = await validateUPDATEPost(arg);
-//     if (val) return val;
-//     let config = {
-//         method: "PUT",
-//         headers: { "Content-type": "application/json" },
-//         body: JSON.stringify(arg)
-//     }
-//     let res = await fetch(`http://172.16.101.146:5800/posts/${id}`, config);
-//     let data = await res.json();
-//     return data;
-// }
-
-
-// const validateUPDATEPost = async ({ id,userId, title, body }) => {
-//     if (typeof id !== "string" || id == undefined) return {status: 406, message: "The data id is not arriving"}
-//     if (typeof userId !== "string" || userId === undefined) return { status: 406, message: "The user data is not arriving" };
-//     if (typeof title !== "string" || title === undefined) return { status: 406, message: "The title data is not arriving" };
-//     if (typeof body !== "string" || body === undefined) return { status: 406, message: "The body data is not arriving" };
-//     let user = await getUser({ userId });
-//     if (user.status == 204) return { status: 200, message: "The user to search does not exist" };
-// }
+            console.log("Post actualizado con éxito:", data);
+            return data;
+        } else {
+            console.log("El ID no existe o es nulo.");
+            return "El ID no existe o es nulo.";
+        }
+    }
